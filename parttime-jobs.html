@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Part-Time Jobs Around the World</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="visa.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="navbar">
+      <div class="nav-left">
+        <a href="index.html">
+          <img src="images/logoindex.png" alt="Dream Path Logo" class="logo" />
+        </a>
+      </div>
+      <div class="nav-center">
+        <h1 class="site-title">Explore Part-Time Job Opportunities in Different Countries!</h1>
+      </div>
+    </nav>
+  </header>
+
+  <h1>Part-Time Jobs by Country</h1>
+  <input type="text" id="searchBar" placeholder="Search by country name...">
+
+  <div class="container" id="jobsContainer">
+    <!-- United States -->
+    <div class="country">
+      <img src="us.jpg" alt="USA City">
+      <div class="country-content">
+        <h2>United States</h2>
+        <ul>
+          <li>Allowed Hours: Up to 20 hours/week (on student visa)</li>
+          <li>Popular Jobs: Retail, Food Service, Campus Assistant</li>
+          <li>Average Wage: $10–$15/hour</li>
+          <li>Ease of Finding Job: High</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Canada -->
+    <div class="country">
+      <img src="can.jpg" alt="Canada City">
+      <div class="country-content">
+        <h2>Canada</h2>
+        <ul>
+          <li>Allowed Hours: Up to 20 hours/week (on student visa)</li>
+          <li>Popular Jobs: Barista, Tutor, Retail</li>
+          <li>Average Wage: $13–$18/hour</li>
+          <li>Ease of Finding Job: High</li>
+        </ul>
+      </div>
+    </div>
+    <!-- United Kingdom -->
+    <div class="country">
+      <img src="uk.jpeg" alt="UK City">
+      <div class="country-content">
+        <h2>United Kingdom</h2>
+        <ul>
+          <li>Allowed Hours: Up to 20 hours/week (on student visa)</li>
+          <li>Popular Jobs: Waiter, Library Assistant, Retail</li>
+          <li>Average Wage: £8–£12/hour</li>
+          <li>Ease of Finding Job: Medium</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Australia -->
+    <div class="country">
+      <img src="aus.webp" alt="Australia City">
+      <div class="country-content">
+        <h2>Australia</h2>
+        <ul>
+          <li>Allowed Hours: Up to 24 hours/week (on student visa)</li>
+          <li>Popular Jobs: Hospitality, Delivery, Admin</li>
+          <li>Average Wage: AUD $18–$25/hour</li>
+          <li>Ease of Finding Job: Very High</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Germany -->
+    <div class="country">
+      <img src="ger.webp" alt="Germany City">
+      <div class="country-content">
+        <h2>Germany</h2>
+        <ul>
+          <li>Allowed Hours: 120 full or 240 half days/year</li>
+          <li>Popular Jobs: Research Assistant, Tutor, Waiter</li>
+          <li>Average Wage: €9–€15/hour</li>
+          <li>Ease of Finding Job: Medium</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Japan -->
+    <div class="country">
+      <img src="japan.jpg" alt="Japan City">
+      <div class="country-content">
+        <h2>Japan</h2>
+        <ul>
+          <li>Allowed Hours: Up to 28 hours/week (on student visa)</li>
+          <li>Popular Jobs: Convenience Store, Restaurant, Teaching</li>
+          <li>Average Wage: ¥900–¥1200/hour</li>
+          <li>Ease of Finding Job: Medium</li>
+        </ul>
+      </div>
+    </div>
+    <!-- France -->
+    <div class="country">
+      <img src="france.jpg" alt="France City">
+      <div class="country-content">
+        <h2>France</h2>
+        <ul>
+          <li>Allowed Hours: Up to 964 hours/year</li>
+          <li>Popular Jobs: Retail, Babysitting, Tutoring</li>
+          <li>Average Wage: €10–€12/hour</li>
+          <li>Ease of Finding Job: Medium</li>
+        </ul>
+      </div>
+    </div>
+    <!-- India -->
+    <div class="country">
+      <img src="india.jpg" alt="India City">
+      <div class="country-content">
+        <h2>India</h2>
+        <ul>
+          <li>Allowed Hours: Limited (on-campus only for international students)</li>
+          <li>Popular Jobs: Research Assistant, Tutor</li>
+          <li>Average Wage: ₹100–₹300/hour</li>
+          <li>Ease of Finding Job: Low</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- South Korea -->
+    <div class="country">
+      <img src="sk.jpg" alt="South Korea City">
+      <div class="country-content">
+        <h2>South Korea</h2>
+        <ul>
+          <li>Allowed Hours: Up to 20 hours/week (on student visa)</li>
+          <li>Popular Jobs: Cafe, Convenience Store, Teaching</li>
+          <li>Average Wage: ₩8,000–₩12,000/hour</li>
+          <li>Ease of Finding Job: Medium</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h2 style="margin-top:40px;">Chance of Getting a Part-Time Job (by Country)</h2>
+  <canvas id="chanceChart" width="400" height="200"></canvas>
+
+  <script>
+    // Search functionality
+    const searchBar = document.getElementById('searchBar');
+    const countries = document.querySelectorAll('.country');
+    searchBar.addEventListener('input', function () {
+      const query = this.value.toLowerCase();
+      countries.forEach(card => {
+        const countryName = card.querySelector('h2').innerText.toLowerCase();
+        card.style.display = countryName.includes(query) ? 'block' : 'none';
+      });
+    });
+
+    // Chart.js Bar Chart for Part-Time Job Chances
+    const ctx = document.getElementById('chanceChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [
+          'Australia', 'United States', 'Canada', 'United Kingdom', 'Germany',
+          'Japan', 'France', 'Singapore', 'South Korea', 'India'
+        ],
+        datasets: [{
+          label: 'Chance of Getting Part-Time Job (%)',
+          data: [95, 90, 88, 75, 70, 65, 65, 60, 60, 30], // Example data
+          backgroundColor: [
+            '#4caf50', '#2196f3', '#00bcd4', '#ffc107', '#9c27b0',
+            '#e91e63', '#ff9800', '#607d8b', '#3f51b5', '#f44336'
+          ]
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        },
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+  </script>
+
+  <footer class="footer">
+    <p><a href="contact.html">Contact Us</a></p>
+  </footer>
+</body>
+</html>
